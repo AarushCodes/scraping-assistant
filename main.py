@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import requests
 import csv
 
+#Headers
 headers = {
     'sec-ch-ua': '"Chromium";v="94", "Google Chrome";v="94", ";Not A Brand";v="99"',
     'sec-ch-ua-mobile': '?0',
@@ -14,9 +15,6 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36'
 
 }
-
-
-#chrome options
 
 
 # initailizing pyttsx3
@@ -34,9 +32,7 @@ def recognize():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print('Listening...')
-        #r.adjust_for_ambient_noise(source)
         audio = r.listen(source)
-
 
     try:
         print('Recognizing')
@@ -44,10 +40,7 @@ def recognize():
         print(f'User said: {query}\n')
 
     except Exception as e:
-        # print(e)
-
         print("I didn't quite understand that, try saying it again?")
-        # speak("I didn't quite understand that, try saying it again?")
         return 'None'
     return query
 
@@ -91,11 +84,12 @@ if __name__ == '__main__':
         elif 'amazon scraper' in query:
             print('which search do you want to scrape')
             command = input('>>')
+            search = command.replace(' ', '+')
             f = open('results.csv', 'w', encoding='UTF8', newline="")
             writer = csv.writer(f)
             _1 = ('Title', 'Price', 'No of Ratings', 'Rating')
             writer.writerow(_1)
-            html_code = requests.get(f'https://www.amazon.in/s?k={command}&ref=nb_sb_noss_1', headers=headers).text
+            html_code = requests.get(f'https://www.amazon.in/s?k={search}&ref=nb_sb_noss_1', headers=headers).text
             soup = BeautifulSoup(html_code, 'lxml')
             items = soup.find_all('div', class_='sg-col sg-col-4-of-12 sg-col-8-of-16 sg-col-12-of-20')
             for item in items:
