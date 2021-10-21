@@ -61,7 +61,7 @@ if __name__ == '__main__':
                 most_popular_video1 = driver.find_element_by_xpath('//*[@id="video-title"]')
                 most_popular_video = most_popular_video1.get_attribute('title')
                 views = driver.find_element_by_xpath('//*[@id="metadata-line"]/span[1]').text
-                what_to_say = (f'the most popular video of the channel  is {most_popular_video} with {views}')
+                what_to_say = (f'the most popular video of the channel is {most_popular_video} with {views}')
                 speak(what_to_say)
                 print(what_to_say)
                 driver.close()
@@ -115,3 +115,5 @@ if __name__ == '__main__':
             print('All results of page 1 saved to results.csv')
         elif 'stop' in query:
             exit()
+        elif 'thank you' in query:
+            speak('Welcome')
